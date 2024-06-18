@@ -33,12 +33,12 @@ It is an opinionated code formatter for HybridForms template files. It enforces 
 
 Install through VS Code extensions. Search for `HybridForms HybridForms DevTools`.
 
-[Visual Studio Code Market Place: HybridForms HybridForms DevTools](https://marketplace.visualstudio.com/items?itemName=icomedias.hfdevtools)
+[Visual Studio Code Market Place: HybridForms HybridForms DevTools](https://marketplace.visualstudio.com/items?itemName=icomedias.hfdevtools-extension)
 
 Can also be installed in VS Code: Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter.
 
 ```
-ext install icomedias.hfdevtools
+ext install icomedias.hfdevtools-extension
 ```
 
 #### Default Formatter
@@ -48,7 +48,7 @@ To ensure that this extension is used over other extensions you may have install
 ```json
 {
   "[html]": {
-    "editor.defaultFormatter": "icomedias.hfdevtools"
+    "editor.defaultFormatter": "icomedias.hfdevtools-extension"
   }
 }
 ```
@@ -185,4 +185,4 @@ If editing the Readme, please conform to the
 
 ## License
 
-[MIT License](LICENSE.md) © 2023 icomedias GmbH.
+[MIT License](LICENSE.txt) © 2023 icomedias GmbH.
