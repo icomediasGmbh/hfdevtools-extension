@@ -2,7 +2,7 @@
     "name": "hftemplate-formatter-extension",
     "displayName": "HybridForms Template Formatter",
     "description": "A VSCode formatter for HybridForms template files",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "publisher": "icomedias",
     "icon": "HF_Extension_icon.png",
     "repository": {
