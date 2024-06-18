@@ -1,0 +1,94 @@
+{
+	"JavaScript Starting Point": {
+		"prefix": "hf-js",
+		"body": [
+			"/* ESLint no-undef-rule: define globals to prevent ESLint errors */",
+            "/* global WinJS HybridForms Promise HFFormdefinition $ */",
+            "",
+            "(function () {",
+            "    'use strict'; // forcing browser to strict mode JavaScript",
+            "",
+            "    WinJS.Namespace.define('HFFormdefinition.${1:SomeNamespace}', {",
+            "        ${2:doSomethingOnChange}: function(value) {",
+            "            console.log('value: ', value);",
+            "            console.log('ctrl: ', this);",
+            "        },",
+            "    });",
+            "",
+            "    WinJS.Utilities.markSupportedForProcessing(HFFormdefinition.${1:SomeNamespace}.${2:doSomethingOnChange});",
+            "})();",
+            "//# sourceURL=${1:filename}.js"
+		],
+		"description": "Custom Javascript starting point"
+    },
+    "JavaScript derived Custom Control": {
+        "prefix": "hf-customcontrol",
+		"body": [
+			"${1:DerivedCustomControl}: WinJS.Class.derive(",
+            "    HybridForms.API.UIControls.BaseControl,",
+            "    function(element, options) {",
+            "        HybridForms.API.UIControls.BaseControl.call(this, element, options);",
+            "    },",
+            "    {",
+            "",
+            "        _init: function(element) {",
+            "            HybridForms.API.UIControls.BaseControl.prototype._init.call(this, element);",
+            "        },",
+            "",
+            "        createControl: function() {",
+            "            return Promise.resolve();",
+            "        },",
+            "",
+            "        registerEvents: function() {",
+            "            console.log('registerEvents');",
+            "        },",
+            "",
+            "        dispose: function() {",
+            "            if (this.disposed) {",
+            "                return;",
+            "            }",
+            "",
+            "            this.disposed = true;",
+            "        }",
+            "    },",
+            "    {",
+            "        //Static methods",
+            "    },",
+            "),"
+		],
+		"description": "JavaScript derived Custom Control"
+    },
+    "Get and Set values": {
+        "prefix": "hf-set",
+        "body": [
+            "const ${1:ctrl}Id = '${2:formcontrol_id}';",
+            "const ${1:ctrl} = HybridForms.API.FormControls.getCtrl(${1:ctrl}Id);",
+            "${1:ctrl}.val(${3});"
+        ],
+        "description": "Get and set values"
+    },
+    "Get a Control": {
+        "prefix": "hf-ctrl",
+        "body": [
+            "const ${1:ctrl} = HybridForms.API.FormControls.getCtrl(${2:id});"
+        ],
+        "description": "Get a control"
+    },
+    "Get a Field": {
+        "prefix": "hf-field",
+        "body": [
+            "const ${1:field} = HybridForms.API.Fields.getById(${2:id});"
+        ],
+        "description": "Get a field"
+    },
+    "Cope with RepeatingUnits": {
+        "prefix": "hf-repeating",
+        "body": [
+            "let postfix = '';",
+            "if (HybridForms.API.RepeatingUnits.isRepeatingUnit(${1:this.element})) {",
+            "    postfix = HybridForms.API.RepeatingUnits.getPostfixFieldId(${1:this.element});",
+            "}"
+        ],
+        "description": "Get post fix of a repeating unit"
+    }
+}

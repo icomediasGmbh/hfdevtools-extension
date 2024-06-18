@@ -1,13 +1,13 @@
 {
-    "name": "hftemplate-formatter-extension",
-    "displayName": "HybridForms Template Formatter",
-    "description": "A VSCode formatter for HybridForms template files",
+    "name": "hfdevtools-extension",
+    "displayName": "HybridForms DevTools",
+    "description": "A VSCode extension for HybridForms template development",
     "version": "1.0.1",
     "publisher": "icomedias",
     "icon": "HF_Extension_icon.png",
     "repository": {
         "type": "git",
-        "url": "https://github.com/IcoDeveloper/hftemplate-formatter-extension.git"
+        "url": "https://github.com/IcoDeveloper/hfdevtools-extension.git"
     },
     "engines": {
         "vscode": "^1.90.0"
@@ -16,12 +16,47 @@
         "Formatters"
     ],
     "activationEvents": [
-        "*"
+        "*",
+        "Snippets"
     ],
     "contributes": {
         "configuration": {
-            "title": "HybridForms Template Formatter"
-        }
+            "title": "HybridForms DevTools"
+        },
+        "snippets": [
+            {
+                "language": "html",
+                "path": "./snippets/layout/attribute-snippets.json"
+            },
+            {
+                "language": "html",
+                "path": "./snippets/layout/block-snippets.json"
+            },
+            {
+                "language": "html",
+                "path": "./snippets/layout/formcontrol-snippets.json"
+            },
+            {
+                "language": "html",
+                "path": "./snippets/layout/extended-snippets.json"
+            },
+            {
+                "language": "javascript",
+                "path": "./snippets/script/javascript-snippets.json"
+            },
+            {
+                "language": "typescript",
+                "path": "./snippets/script/typescript-snippets.json"
+            },
+            {
+                "language": "scss",
+                "path": "./snippets/style/scss-snippets.json"
+            },
+            {
+                "language": "jsonc",
+                "path": "./snippets/stages/stages-snippets.json"
+            }
+        ]
     },
     "main": "./dist/extension.js",
     "scripts": {

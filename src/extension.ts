@@ -6,7 +6,7 @@ import { format } from './formatter';
 let disposables: vscode.Disposable[] = [];
 
 export function activate() {
-    const outputChannel = vscode.window.createOutputChannel('HybridForms Template Formatter');
+    const outputChannel = vscode.window.createOutputChannel('HybridForms DevTools');
     disposables = registerFormatter(outputChannel);
 }
 

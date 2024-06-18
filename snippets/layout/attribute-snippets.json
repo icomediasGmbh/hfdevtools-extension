@@ -1,0 +1,25 @@
+{
+    "TitleAttribute": {
+        "scope": "html",
+        "prefix": "hf-title-attr",
+        "body": ["data-hf-title=\"$1\""],
+        "description": "Creates a data-hf-title attribute"
+    },
+
+    "ConditionAttribute": {
+        "scope": "html",
+        "prefix": "hf-condition-attr",
+        "body": [
+            "data-hf-condition='{",
+            "    \"op\": \"and\",",
+            "    \"cond\": [{",
+            "        \"type\": \"$1\",",
+            "        \"id\": \"$2\",",
+            "        \"val\": \"$3\"",
+            "    }],",
+            "    \"else\": \"${4:invisible}\"",
+            "}'"
+        ],
+        "description": "Creates a data-hf-condition attribute"
+    }
+}
