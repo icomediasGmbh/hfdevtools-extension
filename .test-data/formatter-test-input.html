@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Formatter Test</title>
+    <link rel="stylesheet"
+        data-hf-href="formatter-test.css" />
+    <script data-hf-src="FormatterTestHelper.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        WinJS.Namespace.define("HFFormdefinition.FormatterTestHelper", {});
+    </script>
+
+    <form>
+    <var data-hf-name="info" data-hf-version="1.0.0" data-hf-date="2024-06-18T15:06:19.201Z" data-hf-min-app-version="9.0.0">
+    </var>
+
+    <var data-hf-name="FormSettings"
+        data-hf-formLogo="form-logo.png">
+    </var>
+
+    <!-- title -->
+    <var data-hf-name="Title">Formatter Test</var>
+
+    <!-- first level - pages -->
+    <ol>
+        <li data-hf-title="Page 1">
+            <ol>
+                <li data-hf-title="Tab 1">
+                    <a href="#block_tab_1"></a>
+                    <a href="#block_tab_2"></a>
+                </li>
+            </ol>
+        </li>
+    </ol>
+    </form>
+
+<div id="titleTemplate"
+    data-win-control="WinJS.Binding.Template">
+    <h1>
+        <span class="colon"
+            data-win-bind="innerHTML: data.FormTitle"></span>
+    </h1>
+    <!-- place text here -->
+</div>
+
+<div id="listTemplate"
+    data-win-control="WinJS.Binding.Template"
+    data-win-options="{ img: 'base-80x80.svg', showMainImage: true }">
+    <div class="row-1">
+        <h3 data-win-control="HFWinJSCtrl.Spacer"
+            class="win-type-ellipsis">
+            <!-- place text here -->
+        </h3>
+    </div>
+    <div class="row-2">
+        <h4 data-win-control="HFWinJSCtrl.Spacer"
+            class="win-type-ellipsis">
+            <!-- place text here -->
+        </h4>
+    </div>
+    <div class="row-3">
+        <h5 data-win-control="HFWinJSCtrl.Spacer"
+            class="win-type-ellipsis">
+            <!-- place text here -->
+        </h5>
+    </div>
+</div>
+
+<div id="block_tab_1"
+    data-win-control="WinJS.Binding.Template">
+    <div class="grid column1">
+        <div class="r1 c1">
+            <!-- place controls here -->
+        </div>
+    </div>
+</div>
+
+<div id="block_tab_2"
+    data-win-control="WinJS.Binding.Template">
+    <div class="grid column1">
+        <div class="r1 c1">
+            <!-- place controls here -->
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

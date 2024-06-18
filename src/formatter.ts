@@ -62,7 +62,12 @@ const ignoreTrailingComma = [',', '{', '['];
  * @param regexString - The regex string to use to find the JSON.
  * @returns The text with the JSON formatted.
  */
-const formatJson = (text: string, regexString: string, options: FormattingOptions, addTrailingComma = false) => {
+const formatJson = (
+    text: string,
+    regexString: string,
+    options: Partial<FormattingOptions>,
+    addTrailingComma = false,
+) => {
     let regex = new RegExp(regexString, 'gm');
     const matches = text.match(regex);
 
@@ -135,7 +140,7 @@ const formatJson = (text: string, regexString: string, options: FormattingOption
  * @param regexString - The regex string to use to find the Array.
  * @returns The text with the JSON formatted.
  */
-const formatArray = (text: string, regexString: string, options: FormattingOptions) => {
+const formatArray = (text: string, regexString: string, options: Partial<FormattingOptions>) => {
     let regex = new RegExp(regexString, 'gm');
     const matches = text.match(regex);
 
@@ -254,7 +259,10 @@ const restoreHtmlComments = (text: string) => {
     return text;
 };
 
-const getBeautifyConfig = (options: FormattingOptions, defaultOptions: HTMLBeautifyOptions | JSBeautifyOptions) => {
+const getBeautifyConfig = (
+    options: Partial<FormattingOptions>,
+    defaultOptions: HTMLBeautifyOptions | JSBeautifyOptions,
+) => {
     if (options?.tabSize) {
         defaultOptions.indent_size = options.tabSize;
     }
@@ -267,7 +275,7 @@ const getBeautifyConfig = (options: FormattingOptions, defaultOptions: HTMLBeaut
     return defaultOptions;
 };
 
-export const format = (text: string, options: FormattingOptions) => {
+export const format = (text: string, options: Partial<FormattingOptions>) => {
     let errorString = '';
 
     // add hash to block definition
