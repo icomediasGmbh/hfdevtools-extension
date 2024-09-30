@@ -315,6 +315,22 @@ export const format = (text: string, options: Partial<FormattingOptions>) => {
         errorString += `[ERROR]: format Options\n${error}\n`;
     }
 
+    // format Object Placeholder
+    const objectPlaceholderRegexString = '( *)(data-ph-.*=")[\\s]*({[\\s\\S]*?})[\\s]*(")';
+    try {
+        text = formatJson(text, objectPlaceholderRegexString, options);
+    } catch (error) {
+        errorString += `[ERROR]: format Object Placeholder\n${error}\n`;
+    }
+
+    // format Array Placeholder
+    const arrayPlaceholderRegexString = '( *)(data-ph-.*=")[\\s]*(\\[[\\s\\S]*?\\])[\\s]*(")';
+    try {
+        text = formatArray(text, arrayPlaceholderRegexString, options);
+    } catch (error) {
+        errorString += `[ERROR]: format Array Placeholder\n${error}\n`;
+    }
+
     // format Options
     const includeFilesRegexString = '( *)(data-include-files=")[\\s]*([\\s\\S]*?)[\\s]*(")';
     try {

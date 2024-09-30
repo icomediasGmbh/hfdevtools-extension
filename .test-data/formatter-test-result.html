@@ -79,7 +79,15 @@
         data-win-control="WinJS.Binding.Template">
         <div class="grid column1">
             <div class="r1 c1">
-                <!-- place controls here -->
+                <input id="id"
+                    type="text"
+                    data-win-control="HFWinJSCtrl.TextField"
+                    data-win-options="{
+                        label: '',
+                        tooltip: '',
+                        required: false,
+                        disabled: false,
+                    }">
             </div>
         </div>
     </div>
@@ -88,7 +96,35 @@
         data-win-control="WinJS.Binding.Template">
         <div class="grid column1">
             <div class="r1 c1">
-                <!-- place controls here -->
+                <div id="M0D_KON_Ergebnis_GESAMT_fragment"
+                    data-hf-include="../DFMG_Auftragsmatrix.templ/dfmg-auftragsmatrix.templ.html#summary_fragment"
+                    data-ph-summaryId="M0D_KON_Ergebnis_GESAMT"
+                    data-ph-labelText="Ergebnis Gesamt"
+                    data-ph-summaryFields="[
+                        'M0D_TP_Teilergebnis_AntenneRichtfunk',
+                        'M0D_TP_Teilergebnis_Technikflaeche',
+                        'M0D_TP_Teilergebnis_Niederspannungsversorgung',
+                        'M0D_TP_Teilergebnis_NetzersatzanlageSpeichermedium',
+                        'M0D_TP_Teilergebnis_Genehmigung',
+                        'M0D_EMF_Teilergebnis_Gesamt',
+                        'M0D_AV_Teilergebnis_Gesamt',
+                        'M0D_KON_Teilergebnis_Parallelvorhaben'
+                    ]"
+                    data-ph-resultId="M0D_KON_Ergebnis_GESAMT_result"
+                    data-ph-changeCallback="HFFormdefinition.DfmgAuftragsmatrixHelper.changeClassificationData">
+                </div>
+                <div id="M0D_TP_Teilergebnis_Richtfunk_fragment"
+                    data-hf-include="../DFMG_Auftragsmatrix.templ/dfmg-auftragsmatrix.templ.html#partial_result_fragment"
+                    data-ph-checkId="M0D_TP_Teilergebnis_Richtfunk"
+                    data-ph-labelText="Teilergebnis Richtfunk"
+                    data-ph-checkFields="{
+                        M0K_RI_Bewertung_akzeptiert: 'OK',
+                        M0K_RI_Bewertung_neu: 'WARNING',
+                        M0K_RI_Bewertung_abgelehnt: 'ERROR'
+                    }"
+                    data-ph-checkAll="false"
+                    data-ph-resultId="">
+                </div>
             </div>
         </div>
     </div>
