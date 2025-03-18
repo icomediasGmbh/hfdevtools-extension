@@ -1,4 +1,33 @@
 {
+    "ApproveButton": {
+        "scope": "html",
+        "prefix": "hf-approvebutton",
+        "body": [
+            "<div id=\"${1:id}\"",
+            "    data-win-control=\"HFWinJSCtrl.ApproveButton\"",
+            "    data-win-options=\"{",
+            "        buttonType: '${2:large}',",
+            "        buttonHeading: '${3:heading}',",
+            "        buttonLabel: '${4:label}',",
+            "        action: '${5:GoTo_ListEdit}',",
+            "        maxDelay: ${6},",
+            "        delayInfo: '${7:delayInfo}',",
+            "    }\"></div>"
+        ],
+        "description": "Creates a ButtonControl"
+    },
+    "BooleanControl": {
+        "scope": "html",
+        "prefix": "hf-booleancontrol",
+        "body": [
+            "<div id=\"${1:id}\"",
+            "    data-win-control=\"HFWinJSCtrl.BooleanControl\"",
+            "    data-win-options=\"{",
+            "        defaultValue: ${2: false},",
+            "    }\"></div>"
+        ],
+        "description": "Creates a BooleanControl"
+    },
     "ButtonControl": {
         "scope": "html",
         "prefix": "hf-buttoncontrol",
@@ -81,7 +110,23 @@
         "prefix": "hf-datepicker",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-win-control=\"HFWinJSCtrl.DatePicker\"",
+            "    data-win-control=\"HFWinJSCtrl.DateTimePicker\"",
+            "    data-win-options=\"{",
+            "        label: '$2',",
+            "        tooltip: '',",
+            "        required: ${3:false},",
+            "        disabled: ${4:false},",
+            "        displayValueFormat: 'dd.MM.yyyy',",
+            "    }\"></div>"
+        ],
+        "description": "Creates a DateTimePicker input field"
+    },
+    "DateTimePicker": {
+        "scope": "html",
+        "prefix": "hf-datetimepicker",
+        "body": [
+            "<div id=\"${1:id}\"",
+            "    data-win-control=\"HFWinJSCtrl.DateTimePicker\"",
             "    data-win-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -91,7 +136,7 @@
             "        parseFormats: ['dd.MM.yyyy', 'ddMMyyyy', 'dd/MM/yyyy', 'dd-MM-yyyy', 'd.M.yy', 'ddMMyy', 'd/M/yy', 'd-M-yy'],",
             "    }\"></div>"
         ],
-        "description": "Creates a Datepicker input field"
+        "description": "Creates a DatePicker input field"
     },
     "DrawingControl": {
         "scope": "html",
@@ -180,6 +225,23 @@
             "    }\"></div>"
         ],
         "description": "Creates a Map Button"
+    },
+    "Multiselect": {
+        "scope": "html",
+        "prefix": "hf-multiselect",
+        "body": [
+            "<div id=\"${1:id}\"",
+            "    data-win-control=\"HFWinJSCtrl.Multiselect\"",
+            "    data-win-options=\"{",
+            "        label: '$2',",
+            "        tooltip: '',",
+            "        required: ${3:false},",
+            "        url: '${5:url-to-the-catalog}',",
+            "        dataValueField: 'ID',",
+            "        dataTextField: 'Text',",
+            "    }\"></div>"
+        ],
+        "description": "Creates a Multiselect input field"
     },
     "NumericField": {
         "scope": "html",

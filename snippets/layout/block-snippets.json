@@ -41,6 +41,27 @@
         "description": "Creates a Tab template"
     },
 
+    "TabCaption": {
+        "scope": "html",
+        "prefix": "hf-tabcaption",
+        "body": [
+            "data-hf-caption=\"$1\"",
+            "data-hf-subcaption=\"$2\""
+        ],
+        "description": "Creates a Tab caption"
+    },
+
+    "BlockCaption": {
+        "scope": "html",
+        "prefix": "hf-blockcaption",
+        "body": [
+            "data-hf-caption=\"$1\"",
+            "data-hf-subcaption=\"$2\"",
+            "data-hf-separator=\"${3: bottom}\""
+        ],
+        "description": "Creates a Block caption"
+    },
+
     "FullWidthBlock": {
         "scope": "html",
         "prefix": "hf-fullwidth-block",
