@@ -10,8 +10,6 @@
             "        buttonHeading: '${3:heading}',",
             "        buttonLabel: '${4:label}',",
             "        action: '${5:GoTo_ListEdit}',",
-            "        maxDelay: ${6},",
-            "        delayInfo: '${7:delayInfo}',",
             "    }\"></div>"
         ],
         "description": "Creates a ButtonControl"
