@@ -252,8 +252,6 @@
             "        tooltip: '',",
             "        required: ${3:false},",
             "        disabled: ${4:false},",
-            "        spinners: ${5:false},",
-            "        disableOpenDialog: ${6:true},",
             "    }\" ></div>"
         ],
         "description": "Creates a NumericField input field"
