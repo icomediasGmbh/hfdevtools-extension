@@ -1,6 +1,7 @@
-import { HTMLBeautifyOptions, JSBeautifyOptions, html as beautifyHtml, js as beautifyJs } from 'js-beautify';
+import type { HTMLBeautifyOptions, JSBeautifyOptions } from 'js-beautify';
+import { html as beautifyHtml, js as beautifyJs } from 'js-beautify';
 import { isDefined } from './utils';
-import { FormattingOptions } from 'vscode';
+import type { FormattingOptions } from 'vscode';
 
 const htmlOptions: HTMLBeautifyOptions = {
     indent_size: 4,
