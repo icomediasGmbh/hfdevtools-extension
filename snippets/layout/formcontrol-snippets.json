@@ -108,16 +108,17 @@
         "prefix": "hf-datepicker",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-win-control=\"HFWinJSCtrl.DateTimePicker\"",
+            "    data-win-control=\"HFWinJSCtrl.DatePicker\"",
             "    data-win-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
             "        required: ${3:false},",
             "        disabled: ${4:false},",
             "        displayValueFormat: 'dd.MM.yyyy',",
+            "        parseFormats: ['dd.MM.yyyy', 'ddMMyyyy', 'dd/MM/yyyy', 'dd-MM-yyyy', 'd.M.yy', 'ddMMyy', 'd/M/yy', 'd-M-yy'],",
             "    }\"></div>"
         ],
-        "description": "Creates a DateTimePicker input field"
+        "description": "Creates a DatePicker input field"
     },
     "DateTimePicker": {
         "scope": "html",
@@ -130,11 +131,9 @@
             "        tooltip: '',",
             "        required: ${3:false},",
             "        disabled: ${4:false},",
-            "        displayValueFormat: 'dd.MM.yyyy',",
-            "        parseFormats: ['dd.MM.yyyy', 'ddMMyyyy', 'dd/MM/yyyy', 'dd-MM-yyyy', 'd.M.yy', 'ddMMyy', 'd/M/yy', 'd-M-yy'],",
             "    }\"></div>"
         ],
-        "description": "Creates a DatePicker input field"
+        "description": "Creates a DateTimePicker input field"
     },
     "DrawingControl": {
         "scope": "html",
