@@ -2,7 +2,7 @@
     "name": "hfdevtools-extension",
     "displayName": "HybridForms DevTools",
     "description": "A VSCode extension for HybridForms template development",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "publisher": "icomedias",
     "icon": "HF_Extension_icon.png",
     "repository": {
