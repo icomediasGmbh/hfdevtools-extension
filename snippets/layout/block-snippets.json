@@ -103,5 +103,17 @@
         "prefix": "hf-textcontent",
         "body": ["<span data-win-bind=\"textContent: listData.${1:list_field}\"></span>"],
         "description": "Creates a text content element"
+    },
+
+    "InitializerVariable": {
+        "scope": "html",
+        "prefix": "hf-initializer",
+        "body": [
+            "<var data-hf-name=\"Initializer\"",
+            "    data-hf-rendered=\"HFFormdefinition.${1:Namespace}.onRendered\"",
+            "    data-hf-view-rendered=\"HFFormdefinition.${1:Namespace}.onViewRendered\"",
+            "    data-hf-disposed=\"HFFormdefinition.${1:Namespace}.onDisposed\"></var>"
+        ],
+        "description": "Creates an initializer variable"
     }
 }
