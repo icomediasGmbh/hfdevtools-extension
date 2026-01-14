@@ -79,16 +79,22 @@ You don't need to type any dashes: "hfcustomcontrol" -> "hf-customcontrol" snipp
 
 ##### Block Snippets
 
-| Snippet            | Description                                      |
-| ------------------ | ------------------------------------------------ |
-| hf-block           | Creates an empty block container                 |
-| hf-condition       | Creates a block, area, tab, condition definition |
-| hf-pagetemplate    | Creates a Page template                          |
-| hf-tabtemplate     | Creates a Tab template                           |
-| hf-fullwidth-block | Creates a FullWidth block definition             |
-| hf-observefield    | Creates a ObserveField element                   |
-| hf-dateformater    | Creates a DateFormater element                   |
-| hf-textcontent     | Creates a text content element                   |
+| Snippet                   | Description                                      |
+| ------------------        | ------------------------------------------------ |
+| hf-block                  | Creates an empty block container                 |
+| hf-condition              | Creates a block, area, tab, condition definition |
+| hf-pagetemplate           | Creates a Page template                          |
+| hf-tabtemplate            | Creates a Tab template                           |
+| hf-tabcaption             | Creates Tab caption attributes                   |
+| hf-blockcaption           | Creates Block caption attributes                 |
+| hf-fullwidth-block        | Creates a FullWidth block definition             |
+| hf-headertitletemplate    | Creates a HeaderTitleTemplate element            |
+| hf-titletemplate          | Creates a TitleTemplate element                  |
+| hf-listtemplate           | Creates a ListTemplate element                   |
+| hf-observefield           | Creates a ObserveField element                   |
+| hf-dateformater           | Creates a DateFormater element                   |
+| hf-textcontent            | Creates a text content element                   |
+| hf-initializer            | Creates initializer form variable                |
 
 ##### FormControl Snippets
 

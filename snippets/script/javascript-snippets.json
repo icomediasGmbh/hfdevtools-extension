@@ -14,8 +14,6 @@
             "            console.log('ctrl: ', this);",
             "        },",
             "    });",
-            "",
-            "    WinJS.Utilities.markSupportedForProcessing(HFFormdefinition.${1:SomeNamespace}.${2:doSomethingOnChange});",
             "})();",
             "//# sourceURL=${1:filename}.js"
 		],
