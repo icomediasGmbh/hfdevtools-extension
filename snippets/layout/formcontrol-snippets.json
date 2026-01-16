@@ -4,7 +4,7 @@
         "prefix": "hf-approvebutton",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.ApproveButton\"",
+            "    data-hf-control=\"ApproveButton\"",
             "    data-hf-options=\"{",
             "        buttonType: '${2:large}',",
             "        buttonHeading: '${3:heading}',",
@@ -19,7 +19,7 @@
         "prefix": "hf-booleancontrol",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.BooleanControl\"",
+            "    data-hf-control=\"BooleanControl\"",
             "    data-hf-options=\"{",
             "        defaultValue: ${2: false},",
             "    }\"></div>"
@@ -31,7 +31,7 @@
         "prefix": "hf-buttoncontrol",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.ButtonControl\"",
+            "    data-hf-control=\"ButtonControl\"",
             "    data-hf-options=\"{",
             "        buttonType: '${2:large}',",
             "        buttonHeading: '${3:heading}',",
@@ -48,7 +48,7 @@
             "<input id=\"${1:id}\"",
             "    type=\"checkbox\"",
             "    value=\"${2:value}\"",
-            "    data-hf-control=\"HFWinJSCtrl.CheckBox\"",
+            "    data-hf-control=\"CheckBox\"",
             "    data-hf-options=\"{",
             "        label: '$3',",
             "        defaultValue: ${4:false},",
@@ -62,7 +62,7 @@
         "prefix": "hf-combobox",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.ComboBox\"",
+            "    data-hf-control=\"ComboBox\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -80,7 +80,7 @@
         "prefix": "hf-dropdownlist",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.DropDownList\"",
+            "    data-hf-control=\"DropDownList\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -98,7 +98,7 @@
         "prefix": "hf-datacontrol",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.DataControl\"",
+            "    data-hf-control=\"DataControl\"",
             "    data-hf-options=\"{}\"></div>"
         ],
         "description": "Creates a DataControl field"
@@ -108,7 +108,7 @@
         "prefix": "hf-datepicker",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.DatePicker\"",
+            "    data-hf-control=\"DatePicker\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -125,7 +125,7 @@
         "prefix": "hf-datetimepicker",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.DateTimePicker\"",
+            "    data-hf-control=\"DateTimePicker\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -140,7 +140,7 @@
         "prefix": "hf-drawingcontrol",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.DrawingControl\"",
+            "    data-hf-control=\"DrawingControl\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -155,7 +155,7 @@
         "prefix": "hf-htmlcontainer",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.HtmlContainer\"",
+            "    data-hf-control=\"HtmlContainer\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -168,7 +168,7 @@
         "prefix": "hf-inkcontrol",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.InkControl\"",
+            "    data-hf-control=\"InkControl\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -183,7 +183,7 @@
         "prefix": "hf-label",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.Label\"",
+            "    data-hf-control=\"Label\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -199,7 +199,7 @@
         "body": [
             "<div id=\"${1:id}\"",
             "    class=\"pdf-hide\"",
-            "    data-hf-control=\"HFWinJSCtrl.MailButton\"",
+            "    data-hf-control=\"MailButton\"",
             "    data-hf-options=\"{",
             "        mailId: '$2',",
             "        buttonType: '$3',",
@@ -214,7 +214,7 @@
         "body": [
             "<div id=\"${1:id}\"",
             "    class=\"pdf-hide\"",
-            "    data-hf-control=\"HFWinJSCtrl.MapButton\"",
+            "    data-hf-control=\"MapButton\"",
             "    data-hf-options=\"{",
             "        cityId: '$2',",
             "        buttonType: '$3',",
@@ -228,7 +228,7 @@
         "prefix": "hf-multiselect",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.Multiselect\"",
+            "    data-hf-control=\"Multiselect\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -245,7 +245,7 @@
         "prefix": "hf-numericfield",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.NumericField\"",
+            "    data-hf-control=\"NumericField\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -261,7 +261,7 @@
         "body": [
             "<div id=\"${1:id}\"",
             "    class=\"pdf-hide\"",
-            "    data-hf-control=\"HFWinJSCtrl.PhoneButton\"",
+            "    data-hf-control=\"PhoneButton\"",
             "    data-hf-options=\"{",
             "        phoneId: '$2',",
             "        buttonType: '$3',",
@@ -275,7 +275,7 @@
         "prefix": "hf-picturepicker",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.PicturePicker\"",
+            "    data-hf-control=\"PicturePicker\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -295,7 +295,7 @@
             "    type=\"radio\"",
             "    name=\"${2:name}\"",
             "    value=\"${3:value}\"",
-            "    data-hf-control=\"HFWinJSCtrl.RadioBox\"",
+            "    data-hf-control=\"RadioBox\"",
             "    data-hf-options=\"{",
             "        label: '$4',",
             "        defaultValue: ${5:false},",
@@ -310,7 +310,7 @@
         "body": [
             "<div id=\"${1:id}\"",
             "    class=\"pdf-hide\"",
-            "    data-hf-control=\"HFWinJSCtrl.ReverseGeolocatorButton\"",
+            "    data-hf-control=\"ReverseGeolocatorButton\"",
             "    data-hf-options=\"{",
             "        targetFields: $2,",
             "        buttonType: '$3',",
@@ -324,7 +324,7 @@
         "prefix": "hf-selectbox",
         "body": [
             "<select id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.SelectBox\"",
+            "    data-hf-control=\"SelectBox\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -341,7 +341,7 @@
         "prefix": "hf-signature",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.Signature\"",
+            "    data-hf-control=\"Signature\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -356,7 +356,7 @@
         "body": [
             "<input id=\"${1:id}\"",
             "    type=\"${2:text}\"",
-            "    data-hf-control=\"HFWinJSCtrl.TextField\"",
+            "    data-hf-control=\"TextField\"",
             "    data-hf-options=\"{",
             "        label: '$3',",
             "        tooltip: '',",
@@ -372,7 +372,7 @@
         "body": [
             "<input id=\"${1:id}\"",
             "    type=\"tel\"",
-            "    data-hf-control=\"HFWinJSCtrl.TextField\"",
+            "    data-hf-control=\"TextField\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -392,7 +392,7 @@
         "body": [
             "<textarea id=\"${1:id}\"",
             "    rows=\"1\"",
-            "    data-hf-control=\"HFWinJSCtrl.TextField\"",
+            "    data-hf-control=\"TextField\"",
             "    style=\"min-height:${2:110px}; height:auto\"",
             "    data-hf-options=\"{",
             "        label: '$3',",
@@ -410,7 +410,7 @@
         "prefix": "hf-timepicker",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.TimePicker\"",
+            "    data-hf-control=\"TimePicker\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -424,7 +424,7 @@
         "prefix": "hf-treeview",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.TreeView\"",
+            "    data-hf-control=\"TreeView\"",
             "    data-hf-options=\"{",
             "        label: '$2',",
             "        tooltip: '',",
@@ -439,7 +439,7 @@
         "prefix": "hf-webview",
         "body": [
             "<div id=\"${1:id}\"",
-            "    data-hf-control=\"HFWinJSCtrl.Webview\"",
+            "    data-hf-control=\"Webview\"",
             "    data-hf-options=\"{",
             "        url: '${2}',",
             "        type: '${3:website}',",
