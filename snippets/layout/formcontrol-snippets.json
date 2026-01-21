@@ -52,7 +52,6 @@
             "    data-hf-options=\"{",
             "        label: '$3',",
             "        defaultValue: ${4:false},",
-            "        style: '${5:backgroundHighlight}',",
             "    }\">"
         ],
         "description": "Creates a Checkbox"
@@ -299,7 +298,6 @@
             "    data-hf-options=\"{",
             "        label: '$4',",
             "        defaultValue: ${5:false},",
-            "        style: '${6:backgroundHighlight}',",
             "    }\">"
         ],
         "description": "Creates a RadioBox input field"
