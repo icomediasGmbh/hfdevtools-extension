@@ -2,7 +2,7 @@
     "Template": {
         "scope": "html",
         "prefix": "hf-block",
-        "body": ["<div id=\"${1:id}\"", "    data-hf-block", "    $2", "</div>"],
+        "body": ["<div id=\"${1:id}\"", "    data-hf-block>", "    $2", "</div>"],
         "description": "Creates an empty block container"
     },
 
