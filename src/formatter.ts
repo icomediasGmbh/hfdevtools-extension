@@ -3,6 +3,17 @@ import { html as beautifyHtml, js as beautifyJs } from 'js-beautify';
 import { isDefined } from './utils';
 import type { FormattingOptions } from 'vscode';
 
+const formBlockRegex = /<form>[\s\S]*<\/form>/m;
+const formLinkRegex = /<a.*[\s]*href="([^#]*?)"/gm;
+const commentsRegex = /<!--([\s\S]*?)-->/gm;
+const commentPlaceholderRegex = /<!-- {(\d*?)} -->/gm;
+
+const jsonAttributeRegex = /([ \S]*?)([\S]+=')[\s]*([{|[][\s\S]*?)[\s]*(')/gm;
+const optionsRegex = /( *)(data-win-options=")[\s]*([\s\S]*?)[\s]*(")/gm;
+const objectPlaceholderRegex = /( *)(data-ph-.*=")[\s]*({[\s\S]*?})[\s]*(")/gm;
+const arrayPlaceholderRegex = /( *)(data-ph-.*=")[\s]*(\[[\s\S]*?\])[\s]*(")/gm;
+const includeFilesRegex = /( *)(data-include-files=")[\s]*([\s\S]*?)[\s]*(")/gm;
+
 const htmlOptions: HTMLBeautifyOptions = {
     indent_size: 4,
     indent_char: ' ',
@@ -55,7 +66,7 @@ const arrayOptions: JSBeautifyOptions = {
     templating: ['handlebars', 'auto'],
 };
 
-const ignoreTrailingComma = [',', '{', '['];
+const ignoreTrailingComma = new Set([',', '{', '[']);
 
 /**
  * It takes a string, finds all the JSON strings in it, and formats them
@@ -63,286 +74,240 @@ const ignoreTrailingComma = [',', '{', '['];
  * @param regexString - The regex string to use to find the JSON.
  * @returns The text with the JSON formatted.
  */
-const formatJson = (
-    text: string,
-    regexString: string,
-    options: Partial<FormattingOptions>,
-    addTrailingComma = false,
-) => {
-    let regex = new RegExp(regexString, 'gm');
-    const matches = text.match(regex);
+const formatJson = (text: string, regex: RegExp, beautifyOptions: JSBeautifyOptions, addTrailingComma = false) => {
+    regex.lastIndex = 0;
 
-    if (matches && matches.length) {
-        for (let i = 0; i < matches.length; i++) {
-            regex = new RegExp(regexString, 'gm');
-            const exec = regex.exec(matches[i]);
+    return text.replace(regex, (match, dataDefinition = '', attrName = '', json = '', endQuote = '') => {
+        if (!dataDefinition || !json) {
+            return match;
+        }
 
-            const dataDefinition = exec?.[1];
-            const attrName = exec?.[2];
-            const json = exec?.[3];
-            const endQuote = exec?.[4];
+        const jsonFormatted = beautifyJs(json, beautifyOptions);
+        const jsonLines = jsonFormatted.split('\n');
 
-            if (!dataDefinition || !json) {
+        let inLineWithTag = false;
+        let indentCount = 0;
+
+        for (let index = 0; index < dataDefinition.length; index++) {
+            if (dataDefinition[index] === ' ') {
+                indentCount += 1;
                 continue;
             }
 
-            const jsonFormatted = beautifyJs(json, getBeautifyConfig(options, jsonOptions));
-            const jsonLines = jsonFormatted.split('\n');
+            if (dataDefinition[index] === '<') {
+                inLineWithTag = true;
+            }
+            break;
+        }
 
-            let inLineWithTag = false;
-            let indentCount = 0;
-
-            for (let index = 0; index < dataDefinition.length; index++) {
-                if (dataDefinition[index] === ' ') {
-                    indentCount += 1;
-                    continue;
-                }
-
-                if (dataDefinition[index] === '<') {
-                    inLineWithTag = true;
-                    break;
-                }
+        const indent = ' '.repeat(indentCount);
+        const lines = jsonLines.map((line: string, index: number) => {
+            if (!index) {
+                return line;
             }
 
-            const indent = ' '.repeat(indentCount);
-            const lines = jsonLines.map((line: string, index: number) => {
-                if (!index) {
-                    return line;
-                }
+            if (index === jsonLines.length - 1 || !addTrailingComma || ignoreTrailingComma.has(line[line.length - 1])) {
+                return indent + line;
+            }
 
-                if (
-                    index === jsonLines.length - 1 ||
-                    !addTrailingComma ||
-                    ignoreTrailingComma.includes(line[line.length - 1])
-                ) {
-                    return indent + line;
-                }
+            return indent + line + ',';
+        });
 
-                return indent + line + ',';
-            });
-
-            lines[0] = `${inLineWithTag ? dataDefinition : indent}${attrName}${lines[0]}`;
-            lines[lines.length - 1] = `${lines[lines.length - 1]}${endQuote}`;
-            const linesString = lines.join('\n');
-
-            const replacer = () => {
-                return linesString;
-            };
-            text = text.replace(matches[i], replacer);
-        }
-    }
-
-    return text;
+        lines[0] = `${inLineWithTag ? dataDefinition : indent}${attrName}${lines[0]}`;
+        lines[lines.length - 1] = `${lines[lines.length - 1]}${endQuote}`;
+        return lines.join('\n');
+    });
 };
 
 /**
  * It takes a string, finds all the Array strings in it, and formats them
  * @param text - The text to be formatted.
- * @param regexString - The regex string to use to find the Array.
+ * @param regex - The regex to use to find the Array.
  * @returns The text with the JSON formatted.
  */
-const formatArray = (text: string, regexString: string, options: Partial<FormattingOptions>) => {
-    let regex = new RegExp(regexString, 'gm');
-    const matches = text.match(regex);
+const formatArray = (text: string, regex: RegExp, beautifyOptions: JSBeautifyOptions) => {
+    regex.lastIndex = 0;
 
-    if (matches && matches.length) {
-        for (let i = 0; i < matches.length; i++) {
-            regex = new RegExp(regexString, 'gm');
-            const exec = regex.exec(matches[i]);
+    return text.replace(regex, (match, dataDefinition = '', attrName = '', json = '', endQuote = '') => {
+        if (!dataDefinition || !json) {
+            return match;
+        }
 
-            const dataDefinition = exec?.[1];
-            const attrName = exec?.[2];
-            const json = exec?.[3];
-            const endQuote = exec?.[4];
+        const jsonFormatted = beautifyJs(json, beautifyOptions);
+        const jsonLines = jsonFormatted.split('\n');
 
-            if (!dataDefinition || !json) {
+        let inLineWithTag = false;
+        let indentCount = 0;
+
+        for (let index = 0; index < dataDefinition.length; index++) {
+            if (dataDefinition[index] === ' ') {
+                indentCount += 1;
                 continue;
             }
 
-            const jsonFormatted = beautifyJs(json, getBeautifyConfig(options, arrayOptions));
-            const jsonLines = jsonFormatted.split('\n');
-
-            let inLineWithTag = false;
-            let indentCount = 0;
-
-            for (let index = 0; index < dataDefinition.length; index++) {
-                if (dataDefinition[index] === ' ') {
-                    indentCount += 1;
-                    continue;
-                }
-
-                if (dataDefinition[index] === '<') {
-                    inLineWithTag = true;
-                    break;
-                }
+            if (dataDefinition[index] === '<') {
+                inLineWithTag = true;
             }
-
-            const indent = ' '.repeat(indentCount);
-            const lines = jsonLines.map((line: string, index: number) => {
-                if (index) {
-                    return indent + line;
-                }
-                return line;
-            });
-
-            lines[0] = `${inLineWithTag ? dataDefinition : indent}${attrName}${lines[0]}`;
-            lines[lines.length - 1] = `${lines[lines.length - 1]}${endQuote}`;
-            const linesString = lines.join('\n');
-
-            const replacer = () => {
-                return linesString;
-            };
-            text = text.replace(matches[i], replacer);
+            break;
         }
-    }
 
-    return text;
+        const indent = ' '.repeat(indentCount);
+        const lines = jsonLines.map((line: string, index: number) => {
+            if (index) {
+                return indent + line;
+            }
+            return line;
+        });
+
+        lines[0] = `${inLineWithTag ? dataDefinition : indent}${attrName}${lines[0]}`;
+        lines[lines.length - 1] = `${lines[lines.length - 1]}${endQuote}`;
+        return lines.join('\n');
+    });
 };
 
 const addHashToBlocks = (text: string) => {
-    const regex = new RegExp('<form>[\\s\\S]*</form>', 'gm');
-    const matches = text.match(regex);
+    const formMatch = formBlockRegex.exec(text);
 
-    if (matches && matches.length) {
-        const fixedBlocks = matches[0].replace(/<a.*[\s]*href="([^#]*?)"/gm, (match, p1) => {
-            return `<a href="#${p1}"`;
-        });
-
-        text = text.replace(matches[0], fixedBlocks);
+    if (!formMatch?.[0]) {
+        return text;
     }
 
-    return text;
-};
+    const fixedBlocks = formMatch[0].replace(formLinkRegex, (_match, linkTarget) => {
+        return `<a href="#${linkTarget}"`;
+    });
 
-let commentsMatches: RegExpMatchArray | null = null;
+    return text.replace(formMatch[0], fixedBlocks);
+};
 
 const removeHtmlComments = (text: string) => {
-    const commentsRegexString = '<!--([\\s\\S]*?)-->';
-    const commentsRegex = new RegExp(commentsRegexString, 'gm');
-    commentsMatches = text.match(commentsRegex);
+    const commentsMatches: string[] = [];
+    commentsRegex.lastIndex = 0;
+    const cleanedText = text.replace(commentsRegex, (match) => {
+        const commentIndex = commentsMatches.push(match) - 1;
+        return `<!-- {${commentIndex}} -->`;
+    });
 
-    if (commentsMatches && commentsMatches.length) {
-        for (let i = 0; i < commentsMatches.length; i++) {
-            text = text.replace(commentsMatches[i], `<!-- {${i}} -->`);
-        }
-    }
-
-    console.log(commentsMatches);
-    return text;
+    return { text: cleanedText, commentsMatches };
 };
 
-const restoreHtmlComments = (text: string) => {
-    if (commentsMatches && commentsMatches.length) {
-        const commentPlaceholder = '<!-- {(\\d*?)} -->';
-        let commentPlaceholderRegex = new RegExp(commentPlaceholder, 'gm');
-        const commentPlaceholderMatches = text.match(commentPlaceholderRegex);
-
-        if (!commentPlaceholderMatches) {
-            return text;
-        }
-
-        for (let i = 0; i < commentPlaceholderMatches.length; i++) {
-            commentPlaceholderRegex = new RegExp(commentPlaceholder, 'gm');
-            const exec = commentPlaceholderRegex.exec(commentPlaceholderMatches[i]);
-            const commentIndex = exec?.[1] ? Number(exec[1]) : null;
-
-            if (!isDefined(commentIndex)) {
-                continue;
-            }
-
-            const replacer = () => {
-                return commentsMatches?.[commentIndex] || '';
-            };
-            text = text.replace(commentPlaceholderMatches[i], replacer);
-        }
+const restoreHtmlComments = (text: string, commentsMatches: string[]) => {
+    if (!commentsMatches.length) {
+        return text;
     }
 
-    return text;
+    commentPlaceholderRegex.lastIndex = 0;
+    return text.replace(commentPlaceholderRegex, (_placeholder, commentIndexText) => {
+        const commentIndex = Number(commentIndexText);
+
+        if (!isDefined(commentIndex) || Number.isNaN(commentIndex)) {
+            return _placeholder;
+        }
+
+        return commentsMatches[commentIndex] || '';
+    });
 };
 
-const getBeautifyConfig = (
+const getBeautifyConfig = <T extends HTMLBeautifyOptions | JSBeautifyOptions>(
     options: Partial<FormattingOptions>,
-    defaultOptions: HTMLBeautifyOptions | JSBeautifyOptions,
-) => {
+    defaultOptions: T,
+): T => {
+    const beautifyConfig = { ...defaultOptions };
+
     if (options?.tabSize) {
-        defaultOptions.indent_size = options.tabSize;
+        beautifyConfig.indent_size = options.tabSize;
     }
     if (options?.insertSpaces && options.insertSpaces === true) {
-        defaultOptions.indent_char = ' ';
+        beautifyConfig.indent_char = ' ';
     } else if (options?.insertSpaces === false) {
-        defaultOptions.indent_char = '\t';
-        defaultOptions.indent_size = 1;
+        beautifyConfig.indent_char = '\t';
+        beautifyConfig.indent_size = 1;
     }
-    return defaultOptions;
+    return beautifyConfig;
 };
 
 export const format = (text: string, options: Partial<FormattingOptions>) => {
     let errorString = '';
+    let commentsMatches: string[] = [];
+
+    const htmlBeautifyConfig = getBeautifyConfig(options, htmlOptions);
+    const jsonBeautifyConfig = getBeautifyConfig(options, jsonOptions);
+    const arrayBeautifyConfig = getBeautifyConfig(options, arrayOptions);
 
     // add hash to block definition
     try {
-        text = addHashToBlocks(text);
+        if (text.includes('<form') && text.includes('href="')) {
+            text = addHashToBlocks(text);
+        }
     } catch (error) {
         errorString += `[ERROR]: add hash to block\n${error}\n`;
     }
 
     // format HTML
     try {
-        text = beautifyHtml(text, getBeautifyConfig(options, htmlOptions));
+        text = beautifyHtml(text, htmlBeautifyConfig);
     } catch (error) {
         errorString += `[ERROR]: beautify HTML\n${error}\n`;
     }
 
     // remove Comments
     try {
-        text = removeHtmlComments(text);
+        if (text.includes('<!--')) {
+            const removedComments = removeHtmlComments(text);
+            text = removedComments.text;
+            commentsMatches = removedComments.commentsMatches;
+        }
     } catch (error) {
         errorString += `[ERROR]: remove Comments\n${error}\n`;
     }
 
     // format JSON
-    const jsonAttributeRegexString = "([ \\S]*?)([\\S]+=')[\\s]*([{|[][\\s\\S]*?)[\\s]*(')";
     try {
-        text = formatJson(text, jsonAttributeRegexString, options);
+        if (text.includes("='")) {
+            text = formatJson(text, jsonAttributeRegex, jsonBeautifyConfig);
+        }
     } catch (error) {
         errorString += `[ERROR]: format JSON\n${error}\n`;
     }
 
     // format Options
-    const optionsRegexString = '( *)(data-win-options=")[\\s]*([\\s\\S]*?)[\\s]*(")';
     try {
-        text = formatJson(text, optionsRegexString, options);
+        if (text.includes('data-win-options="')) {
+            text = formatJson(text, optionsRegex, jsonBeautifyConfig);
+        }
     } catch (error) {
         errorString += `[ERROR]: format Options\n${error}\n`;
     }
 
     // format Object Placeholder
-    const objectPlaceholderRegexString = '( *)(data-ph-.*=")[\\s]*({[\\s\\S]*?})[\\s]*(")';
     try {
-        text = formatJson(text, objectPlaceholderRegexString, options);
+        if (text.includes('data-ph-')) {
+            text = formatJson(text, objectPlaceholderRegex, jsonBeautifyConfig);
+        }
     } catch (error) {
         errorString += `[ERROR]: format Object Placeholder\n${error}\n`;
     }
 
     // format Array Placeholder
-    const arrayPlaceholderRegexString = '( *)(data-ph-.*=")[\\s]*(\\[[\\s\\S]*?\\])[\\s]*(")';
     try {
-        text = formatArray(text, arrayPlaceholderRegexString, options);
+        if (text.includes('data-ph-')) {
+            text = formatArray(text, arrayPlaceholderRegex, arrayBeautifyConfig);
+        }
     } catch (error) {
         errorString += `[ERROR]: format Array Placeholder\n${error}\n`;
     }
 
     // format Options
-    const includeFilesRegexString = '( *)(data-include-files=")[\\s]*([\\s\\S]*?)[\\s]*(")';
     try {
-        text = formatArray(text, includeFilesRegexString, options);
+        if (text.includes('data-include-files="')) {
+            text = formatArray(text, includeFilesRegex, arrayBeautifyConfig);
+        }
     } catch (error) {
         errorString += `[ERROR]: format include files\n${error}\n`;
     }
 
     // restore Comments
     try {
-        text = restoreHtmlComments(text);
+        text = restoreHtmlComments(text, commentsMatches);
     } catch (error) {
         errorString += `[ERROR]: restore Comments\n${error}\n`;
     }
