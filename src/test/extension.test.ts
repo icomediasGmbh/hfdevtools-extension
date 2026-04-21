@@ -11,4 +11,19 @@ suite('Extension Test Suite', () => {
         const formatted = format(testFile.toString(), {});
         assert.strictEqual(formatted.text, resultFile.toString());
     });
+
+    test('Formats data-hf-options like data-win-options', () => {
+        const input = '<div id="test" data-hf-options="{ label: \'\', required: false }"></div>';
+
+        const formatted = format(input, {});
+
+        assert.strictEqual(
+            formatted.text,
+            `<div id="test"
+    data-hf-options="{
+        label: '',
+        required: false
+    }"></div>`,
+        );
+    });
 });

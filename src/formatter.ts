@@ -9,7 +9,7 @@ const commentsRegex = /<!--([\s\S]*?)-->/gm;
 const commentPlaceholderRegex = /<!-- {(\d*?)} -->/gm;
 
 const jsonAttributeRegex = /([ \S]*?)([\S]+=')[\s]*([{|[][\s\S]*?)[\s]*(')/gm;
-const optionsRegex = /( *)(data-win-options=")[\s]*([\s\S]*?)[\s]*(")/gm;
+const optionsRegex = /( *)(data-(?:win|hf)-options=")[\s]*([\s\S]*?)[\s]*(")/gm;
 const objectPlaceholderRegex = /( *)(data-ph-.*=")[\s]*({[\s\S]*?})[\s]*(")/gm;
 const arrayPlaceholderRegex = /( *)(data-ph-.*=")[\s]*(\[[\s\S]*?\])[\s]*(")/gm;
 const includeFilesRegex = /( *)(data-include-files=")[\s]*([\s\S]*?)[\s]*(")/gm;
@@ -271,7 +271,7 @@ export const format = (text: string, options: Partial<FormattingOptions>) => {
 
     // format Options
     try {
-        if (text.includes('data-win-options="')) {
+        if (text.includes('data-win-options="') || text.includes('data-hf-options="')) {
             text = formatJson(text, optionsRegex, jsonBeautifyConfig);
         }
     } catch (error) {
