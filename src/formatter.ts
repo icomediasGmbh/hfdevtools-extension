@@ -8,7 +8,10 @@ const formLinkRegex = /<a.*[\s]*href="([^#]*?)"/gm;
 const commentsRegex = /<!--([\s\S]*?)-->/gm;
 const commentPlaceholderRegex = /<!-- {(\d*?)} -->/gm;
 
-const jsonAttributeRegex = /([ \S]*?)([\S]+=')[\s]*([{|[][\s\S]*?)[\s]*(')/gm;
+// anchored to line start to avoid quadratic backtracking on large files;
+// runs after beautifyHtml (wrap_attributes: 'force'), so an attribute is
+// always at line start or directly after its tag
+const jsonAttributeRegex = /^([ \t]*(?:<[^\n']*?)?)([^\s=]+=')[\s]*([{[][\s\S]*?)[\s]*(')/gm;
 const optionsRegex = /( *)(data-(?:win|hf)-options=")[\s]*([\s\S]*?)[\s]*(")/gm;
 const objectPlaceholderRegex = /( *)(data-ph-.*=")[\s]*({[\s\S]*?})[\s]*(")/gm;
 const arrayPlaceholderRegex = /( *)(data-ph-.*=")[\s]*(\[[\s\S]*?\])[\s]*(")/gm;
