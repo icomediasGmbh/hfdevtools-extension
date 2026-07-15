@@ -12,10 +12,10 @@ const commentPlaceholderRegex = /<!-- {(\d*?)} -->/gm;
 // runs after beautifyHtml (wrap_attributes: 'force'), so an attribute is
 // always at line start or directly after its tag
 const jsonAttributeRegex = /^([ \t]*(?:<[^\n']*?)?)([^\s=]+=')[\s]*([{[][\s\S]*?)[\s]*(')/gm;
-const optionsRegex = /( *)(data-(?:win|hf)-options=")[\s]*([\s\S]*?)[\s]*(")/gm;
-const objectPlaceholderRegex = /( *)(data-ph-.*=")[\s]*({[\s\S]*?})[\s]*(")/gm;
-const arrayPlaceholderRegex = /( *)(data-ph-.*=")[\s]*(\[[\s\S]*?\])[\s]*(")/gm;
-const includeFilesRegex = /( *)(data-include-files=")[\s]*([\s\S]*?)[\s]*(")/gm;
+const optionsRegex = /^([ \t]*(?:<[^\n"]*?)?)(data-(?:win|hf)-options=")[\s]*([\s\S]*?)[\s]*(")/gm;
+const objectPlaceholderRegex = /^([ \t]*(?:<[^\n"]*?)?)(data-ph-.*=")[\s]*({[\s\S]*?})[\s]*(")/gm;
+const arrayPlaceholderRegex = /^([ \t]*(?:<[^\n"]*?)?)(data-ph-.*=")[\s]*(\[[\s\S]*?\])[\s]*(")/gm;
+const includeFilesRegex = /^([ \t]*(?:<[^\n"]*?)?)(data-include-files=")[\s]*([\s\S]*?)[\s]*(")/gm;
 
 const htmlOptions: HTMLBeautifyOptions = {
     indent_size: 4,
@@ -77,7 +77,13 @@ const ignoreTrailingComma = new Set([',', '{', '[']);
  * @param regexString - The regex string to use to find the JSON.
  * @returns The text with the JSON formatted.
  */
-const formatJson = (text: string, regex: RegExp, beautifyOptions: JSBeautifyOptions, addTrailingComma = false) => {
+const formatJson = (
+    text: string,
+    regex: RegExp,
+    beautifyOptions: JSBeautifyOptions,
+    addTrailingComma = false,
+    extraIndentWhenInline = false,
+) => {
     regex.lastIndex = 0;
 
     return text.replace(regex, (match, dataDefinition = '', attrName = '', json = '', endQuote = '') => {
@@ -101,6 +107,12 @@ const formatJson = (text: string, regex: RegExp, beautifyOptions: JSBeautifyOpti
                 inLineWithTag = true;
             }
             break;
+        }
+
+        // an attribute inline with its tag gets one extra level so the JSON
+        // body and closing quote line up with the wrapped attributes below
+        if (inLineWithTag && extraIndentWhenInline) {
+            indentCount += beautifyOptions.indent_size ?? 4;
         }
 
         const indent = ' '.repeat(indentCount);
@@ -128,7 +140,12 @@ const formatJson = (text: string, regex: RegExp, beautifyOptions: JSBeautifyOpti
  * @param regex - The regex to use to find the Array.
  * @returns The text with the JSON formatted.
  */
-const formatArray = (text: string, regex: RegExp, beautifyOptions: JSBeautifyOptions) => {
+const formatArray = (
+    text: string,
+    regex: RegExp,
+    beautifyOptions: JSBeautifyOptions,
+    extraIndentWhenInline = false,
+) => {
     regex.lastIndex = 0;
 
     return text.replace(regex, (match, dataDefinition = '', attrName = '', json = '', endQuote = '') => {
@@ -152,6 +169,12 @@ const formatArray = (text: string, regex: RegExp, beautifyOptions: JSBeautifyOpt
                 inLineWithTag = true;
             }
             break;
+        }
+
+        // an attribute inline with its tag gets one extra level so the JSON
+        // body and closing quote line up with the wrapped attributes below
+        if (inLineWithTag && extraIndentWhenInline) {
+            indentCount += beautifyOptions.indent_size ?? 4;
         }
 
         const indent = ' '.repeat(indentCount);
@@ -275,7 +298,7 @@ export const format = (text: string, options: Partial<FormattingOptions>) => {
     // format Options
     try {
         if (text.includes('data-win-options="') || text.includes('data-hf-options="')) {
-            text = formatJson(text, optionsRegex, jsonBeautifyConfig);
+            text = formatJson(text, optionsRegex, jsonBeautifyConfig, false, true);
         }
     } catch (error) {
         errorString += `[ERROR]: format Options\n${error}\n`;
@@ -284,7 +307,7 @@ export const format = (text: string, options: Partial<FormattingOptions>) => {
     // format Object Placeholder
     try {
         if (text.includes('data-ph-')) {
-            text = formatJson(text, objectPlaceholderRegex, jsonBeautifyConfig);
+            text = formatJson(text, objectPlaceholderRegex, jsonBeautifyConfig, false, true);
         }
     } catch (error) {
         errorString += `[ERROR]: format Object Placeholder\n${error}\n`;
@@ -293,7 +316,7 @@ export const format = (text: string, options: Partial<FormattingOptions>) => {
     // format Array Placeholder
     try {
         if (text.includes('data-ph-')) {
-            text = formatArray(text, arrayPlaceholderRegex, arrayBeautifyConfig);
+            text = formatArray(text, arrayPlaceholderRegex, arrayBeautifyConfig, true);
         }
     } catch (error) {
         errorString += `[ERROR]: format Array Placeholder\n${error}\n`;
@@ -302,7 +325,7 @@ export const format = (text: string, options: Partial<FormattingOptions>) => {
     // format Options
     try {
         if (text.includes('data-include-files="')) {
-            text = formatArray(text, includeFilesRegex, arrayBeautifyConfig);
+            text = formatArray(text, includeFilesRegex, arrayBeautifyConfig, true);
         }
     } catch (error) {
         errorString += `[ERROR]: format include files\n${error}\n`;

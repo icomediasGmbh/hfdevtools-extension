@@ -13,7 +13,12 @@
         WinJS.Namespace.define("HFFormdefinition.FormatterTestHelper", {});
     </script>
 
-    <form>
+    <form data-hf-condition='{
+        "cond": [{
+            "type": "page",
+            "id": "abschluss"
+        }]
+    }'>
     <var data-hf-name="info" data-hf-version="1.0.0" data-hf-date="2024-06-18T15:06:19.201Z" data-hf-min-app-version="9.0.0">
     </var>
 
@@ -46,9 +51,11 @@
     <!-- place text here -->
 </div>
 
-<div id="listTemplate"
-    data-win-control="WinJS.Binding.Template"
-    data-win-options="{ img: 'base-80x80.svg', showMainImage: true }">
+    <div data-hf-options="{
+     img: 'logo-dashboard-sl.png',
+     showMainImage: true
+ }"
+    data-hf-template="FormList">
     <div class="row-1">
         <h3 data-win-control="HFWinJSCtrl.Spacer"
             class="win-type-ellipsis">
